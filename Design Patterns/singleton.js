@@ -41,7 +41,6 @@ var MQ_Widget = MQ_Widget || {};
                 MQ_Widget = (function () {
                 // Instance stores a reference to the Singleton
                 var instance;
-                        var $;
                         function init() {
 
                         // Singleton
@@ -49,71 +48,52 @@ var MQ_Widget = MQ_Widget || {};
                         // Private methods and variables
                         function privateMethod() {
                         console.log("I am private");
-                        }
+                        };
+                                /**
+                                 * 
+                                 * @returns {undefined}
+                                 */
+                                        function attach_events() {
+                                        $(document).on('click', jselectors.buttons.booking, handle_clicker_book);
+                                        };
+                                        var privateVariable = "Im also private";
+                                        var jselectors = {
+                                        buttons: {
 
-                        var privateVariable = "Im also private";
-                                var jselectors = {
-                                buttons: {
-                                booking: '#mq-book-now'
-                                },
-                                        divs: {
-                                        overlay: {
-                                        id: 'mq-displaybox',
-                                                sel: '#mq-displaybox'
-                                        }
                                         },
-                                        iframes: {
-                                        widget: {
-                                        id: 'mq-widget-ifrm',
-                                                sel: '#mq-widget-ifrm'
-                                        }
-                                        }
-                                };
-                                var conf = {
-                                css: {
-                                file: '/widget/css/iframe.css',
-                                        domid: 'iframecss'
-                                },
-                                        js: {
-                                        file: '/widget/js/iframe.js'
+                                                divs: {
+
+                                                },
+                                                iframes: {
+
+                                                }
+                                        };
+                                        var conf = {
+                                        };
+                                        return {
+                                        // Public methods and variables
+                                        publicMethod: function () {
+                                        console.log("The public can see me!");
+                                                privateMethod();
                                         },
-                                        routes: {
-                                        widget: {
-                                        view: '/widget/view'
-                                        }
-                                        },
-                                        iframe: {
-                                        width: 800,
-                                                height: 600
-                                        }
+                                                engine: function () {
+                                                attach_events();
+                                                },
+                                                publicProperty: "I am also public"
+                                        };
                                 };
                                 return {
-                                // Public methods and variables
-                                publicMethod: function () {
-                                console.log("The public can see me!");
-                                        privateMethod();
-                                },
-                                        engine: function () {
-                                        build_dom();
-                                                load_css();
-                                                attach_events();
-                                        },
-                                        publicProperty: "I am also public"
+                                // Get the Singleton instance if one exists
+                                // or create one if it doesn't
+                                getInstance: function () {
+                                if (!instance) {
+                                instance = init();
+                                }
+
+                                return instance;
+                                }
+
                                 };
-                        }
-                ;
-                        return {
-                        // Get the Singleton instance if one exists
-                        // or create one if it doesn't
-                        getInstance: function () {
-                        if (!instance) {
-                        instance = init();
-                        }
-
-                        return instance;
-                        }
-
-                        };
-                })();
+                        })();
                         $(document).ready(MQ_Widget.getInstance().engine());
-                }(jQuery);
+                }(jQuery));
