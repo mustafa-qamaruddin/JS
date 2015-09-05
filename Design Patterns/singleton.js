@@ -19,81 +19,87 @@
  * @author        Mustafa Qamar-ud-Din <m.qamaruddin@nilecode.com>
  * @modified      2015-09-3
  */
-var MQ_Widget = MQ_Widget || {};
-        /**
-         * This much more elaborate example allows us to
-         * define both private and public methods of our
-         * Singleton object at the cost of being a bit 
-         * more complex than all the others.
-         * http://robdodson.me/javascript-design-patterns-singleton/
-         * http://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript
-         * @type Function|iframe_L57.iframeAnonym$1
-         */
+/**
+ * This much more elaborate example allows us to
+ * define both private and public methods of our
+ * Singleton object at the cost of being a bit 
+ * more complex than all the others.
+ * http://robdodson.me/javascript-design-patterns-singleton/
+ * http://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript
+ * @type Function|iframe_L57.iframeAnonym$1
+ */
+/**
+ *  avoid conflicts with other versions or libraries 
+ */
+jQuery.noConflict();
+/**
+ *  reserve $ for JQuery
+ */
+(
+    function($) {
+        var MQ_Widget = MQ_Widget || (function() {
+            // Instance stores a reference to the Singleton
+            var instance;
 
-        /**
-         *  avoid conflicts with other versions or libraries 
-         */
-        jQuery.noConflict();
-        /**
-         *  reserve $ for JQuery
-         */
-                (function ($) {
-                MQ_Widget = (function () {
-                // Instance stores a reference to the Singleton
-                var instance;
-                        function init() {
+            function init() {
 
-                        // Singleton
+                // Singleton
 
-                        // Private methods and variables
-                        function privateMethod() {
-                        console.log("I am private");
-                        };
-                                /**
-                                 * 
-                                 * @returns {undefined}
-                                 */
-                                        function attach_events() {
-                                        $(document).on('click', jselectors.buttons.booking, handle_clicker_book);
-                                        };
-                                        var privateVariable = "Im also private";
-                                        var jselectors = {
-                                        buttons: {
+                // Private methods and variables
+                function privateMethod() {
+                    console.log("I am private");
+                };
+                /**
+                 * 
+                 */
+                function handle_change_rooms(event) {
+                    console(event);
+                    var select = $(e.target);
+                    console.log(select.val());
+                };
+                /**
+                 * 
+                 * @returns {undefined}
+                 */
+                function attach_events() {
+                    $(document).on('change', jselectors.dropdowns.rooms.id, handle_change_rooms);
+                };
+                var privateVariable = "Im also private";
+                var jselectors = {
+                    dropdowns: {
+                        rooms: {
+                            id: 'RoomId',
+                            sel: '#RoomId'
+                        }
+                    }
+                };
+                var conf = {};
+                return {
+                    // Public methods and variables
+                    publicMethod: function() {
+                        console.log("The public can see me!");
+                        privateMethod();
+                    },
+                    engine: function() {
+                        attach_events();
+                    },
+                    publicProperty: "I am also public"
+                };
+            };
+            return {
+                // Get the Singleton instance if one exists
+                // or create one if it doesn't
+                getInstance: function() {
+                    if (!instance) {
+                        instance = init();
+                    }
 
-                                        },
-                                                divs: {
+                    return instance;
+                }
 
-                                                },
-                                                iframes: {
-
-                                                }
-                                        };
-                                        var conf = {
-                                        };
-                                        return {
-                                        // Public methods and variables
-                                        publicMethod: function () {
-                                        console.log("The public can see me!");
-                                                privateMethod();
-                                        },
-                                                engine: function () {
-                                                attach_events();
-                                                },
-                                                publicProperty: "I am also public"
-                                        };
-                                };
-                                return {
-                                // Get the Singleton instance if one exists
-                                // or create one if it doesn't
-                                getInstance: function () {
-                                if (!instance) {
-                                instance = init();
-                                }
-
-                                return instance;
-                                }
-
-                                };
-                        })();
-                        $(document).ready(MQ_Widget.getInstance().engine());
-                }(jQuery));
+            };
+        })();
+        $(document).ready(MQ_Widget.getInstance().engine());
+    }
+    (jQuery)
+);
