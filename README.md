@@ -18,6 +18,8 @@ Then, install babelify
 
 $ npm install babelify
 
+Set presets to ES2015 in .babelrc
+
 Afterwards, edit package.json to use babel for transpiling with comments set to false. Or in a single command run
 
 $ browserify -d -e script.js -t [ babelify -- comments false ] -o bundle.js
